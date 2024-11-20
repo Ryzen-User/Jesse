@@ -1,0 +1,175 @@
+<html><head><base href="." /><title>A Special Invitation for Hazel</title><style>
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+}
+
+.container {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+.heart {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-yes {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-no {
+    background: #ff4757;
+    color: white;
+    position: relative;
+}
+
+.flowers {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+</style></head><body>
+
+<div class="container">
+    <svg class="heart" viewBox="0 0 32 32">
+        <path fill="#ff4757" d="M16,28.261c0,0-14-7.926-14-17.046c0-8.565,9.333-11.816,14-4.399
+            c4.667-7.417,14-4.166,14,4.399C30,20.335,16,28.261,16,28.261z">
+            <animate attributeName="fill" values="#ff4757;#ff6b6b;#ff4757" dur="2s" repeatCount="indefinite"/>
+        </path>
+    </svg>
+    
+    <h1>Dear Hazel Lyn Angelo,</h1>
+    <p>Would you do me the honor of joining me for a special evening?</p>
+    
+    <div class="buttons">
+        <button class="btn btn-yes" onclick="acceptDate()">Yes, I'd love to! 💝</button>
+        <button class="btn btn-no" onmouseover="moveButton(this)" onclick="acceptDate()">No</button>
+    </div>
+</div>
+
+<svg class="flowers" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <defs>
+        <radialGradient id="flower" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" style="stop-color:#ff6b6b"/>
+            <stop offset="100%" style="stop-color:#ff4757"/>
+        </radialGradient>
+    </defs>
+</svg>
+
+<script>
+function moveButton(btn) {
+    // Make the "No" button run away from the cursor
+    const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+    
+    btn.style.position = 'fixed';
+    btn.style.left = `${x}px`;
+    btn.style.top = `${y}px`;
+}
+
+function acceptDate() {
+    const container = document.querySelector('.container');
+    container.innerHTML = `
+        <svg class="heart" viewBox="0 0 32 32">
+            <path fill="#ff4757" d="M16,28.261c0,0-14-7.926-14-17.046c0-8.565,9.333-11.816,14-4.399
+                c4.667-7.417,14-4.166,14,4.399C30,20.335,16,28.261,16,28.261z">
+                <animate attributeName="fill" values="#ff4757;#ff6b6b;#ff4757" dur="1s" repeatCount="indefinite"/>
+            </path>
+        </svg>
+        <h1>Yay! 🎉</h1>
+        <p>I can't wait to see you, Hazel!</p>
+        <p>Get ready for an unforgettable evening! 💕</p>
+    `;
+    
+    // Create falling hearts animation
+    for(let i = 0; i < 50; i++) {
+        createHeart();
+    }
+}
+
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.innerHTML = '❤️';
+    heart.style.position = 'fixed';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.top = '-20px';
+    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+    heart.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+    heart.style.opacity = Math.random();
+    document.body.appendChild(heart);
+    
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(${Math.random() * 360}deg);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    setTimeout(() => {
+        heart.remove();
+        style.remove();
+    }, 5000);
+}
+</script>
+
+</body></html>
